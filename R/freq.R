@@ -10,15 +10,15 @@ freq <- function(.data, var = NULL, by, condition, vartype = 'se') {
     # If var is defined, it's added to the 'by' variables:
     if (is.null(var)) {
         print(1)
-        groups <- expr(!!enexpr(by))
+        groups <- rlang::expr(!!rlang::enexpr(by))
     } else {
         print(2)
-        groups <- expr(c(!!enexpr(by), !!enexpr(var)))
+        groups <- rlang::expr(c(!!rlang::enexpr(by), !!enexpr(var)))
     }
 
     estimates <- design %>%
         dplyr::group_by(dplyr::across(!!groups)) %>%
-        srvyr::summarise(prop = survey_mean(!!enexpr(condition),
+        srvyr::summarise(prop = srvyr::survey_mean(!!enexpr(condition),
                                             proportion = TRUE,
                                             vartype = vartype))
     return(estimates)
