@@ -22,10 +22,8 @@ freq <- function(.data, var = NULL, by, condition, vartype = 'se') {
 
     # If var is defined, it's added to the 'by' variables:
     if (is.null(var)) {
-        print(1)
         groups <- rlang::expr(!!rlang::enexpr(by))
     } else {
-        print(2)
         groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(var)))
     }
 
