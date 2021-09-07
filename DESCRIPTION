@@ -1,11 +1,11 @@
 Package: elsoc
-Title: What the Package Does (One Line, Title Case)
+Title: Useful functions to deal with the Encuesta Social Longitudinal de Chile (ELSOC)
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Edgardo",
+           family = "Cerda",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "edgardo.cerda.e@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: What the package does (one paragraph).
 License: `use_mit_license()`, `use_gpl3_license()` or friends to

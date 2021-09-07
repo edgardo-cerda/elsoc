@@ -1,3 +1,16 @@
+#' freq
+#'
+#' Function to create a frecuency table
+#' @param .data
+#' @param var = NULL
+#' @param by
+#' @param condition
+#' @param vartype
+#'
+#' @return
+#' @export
+#'
+#' @examples elsoc_long_2016_2019 %>% freq(by = c(m0_sexo, ola))
 freq <- function(.data, var = NULL, by, condition, vartype = 'se') {
 
     # If .data is not a survey.design object it is created
@@ -13,7 +26,7 @@ freq <- function(.data, var = NULL, by, condition, vartype = 'se') {
         groups <- rlang::expr(!!rlang::enexpr(by))
     } else {
         print(2)
-        groups <- rlang::expr(c(!!rlang::enexpr(by), !!enexpr(var)))
+        groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(var)))
     }
 
     estimates <- design %>%
