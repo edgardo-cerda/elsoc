@@ -13,6 +13,5 @@ design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 
         srvyr::as_survey(ids = !!rlang::ensym(ids),
                          strata = !!rlang::ensym(strata),
                          weights = !!rlang::ensym(weights), nest = nest)
-    print('holi')
     return(design)
 }
