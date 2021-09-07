@@ -2,7 +2,7 @@
 #'
 #' Loads the elsoc dataset into the workspace
 #'
-#' @param url
+#' @param url = "https://dataverse.harvard.edu/api/access/datafile/4606527"
 #'
 #' @return loads the elsoc dataset into the workspace
 #' @export

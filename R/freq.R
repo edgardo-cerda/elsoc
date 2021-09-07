@@ -5,7 +5,7 @@
 #' @param var = NULL
 #' @param by
 #' @param condition
-#' @param vartype
+#' @param vartype = 'se'
 #'
 #' @return
 #' @export
@@ -29,7 +29,7 @@ freq <- function(.data, var = NULL, by, condition, vartype = 'se') {
 
     estimates <- design %>%
         dplyr::group_by(dplyr::across(!!groups)) %>%
-        srvyr::summarise(prop = srvyr::survey_mean(!!enexpr(condition),
+        srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(condition),
                                             proportion = TRUE,
                                             vartype = vartype))
     return(estimates)

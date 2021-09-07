@@ -9,7 +9,7 @@ freq(.data, var = NULL, by, condition, vartype = "se")
 \arguments{
 \item{var}{= NULL}
 
-\item{vartype}{}
+\item{vartype}{= 'se'}
 }
 \value{
 
