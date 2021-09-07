@@ -4,18 +4,22 @@
 \alias{freq}
 \title{freq}
 \usage{
-freq(.data, var = NULL, by, condition, vartype = "se")
+freq(.data, x, by, condition, vartype = "se")
 }
 \arguments{
-\item{var}{= NULL}
+\item{.data}{data frame (ELSOC) in long format}
 
-\item{vartype}{= 'se'}
+\item{x}{variable, variable name or logical vector to calculate proportions}
+
+\item{by}{vector of variables to group estimates}
+
+\item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')}
 }
 \value{
 
 }
 \description{
-Function to create a frecuency table
+Calculates proportions and its variance from ELSOC considering complex survey design
 }
 \examples{
 elsoc_long_2016_2019 \%>\% freq(by = c(m0_sexo, ola))

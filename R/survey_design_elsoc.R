@@ -1,16 +1,18 @@
-#' design_elsoc
+#' survey_design_elsoc
 #'
-#' @param .data
-#' @param ids = "segmento"
-#' @param strata = "estrato"
-#' @param weights = "ponderador02"
-#' @param nest = TRUE
+#' survey_design_elsoc can be used to create a srvyr's tbl_svy object using design information from ELSOC
+#'
+#' @param .data data frame (ELSOC) in long format.
+#' @param ids Variable or variable name in .data especifying cluster ids.
+#' @param strata Variable or variable name in .data especifying strata.
+#' @param weights Variable or variable name in .data especifying weights. Missing values are droped.
+#' @param nest if TRUE, relabel cluster ids to enforce nesting within strata
 #'
 #' @return
 #' @export
 #'
 #' @examples elsoc_long_2016_2021 %>% design_elsoc()
-design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 'ponderador02', nest = TRUE) {
+survey_design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 'ponderador02', nest = TRUE) {
 
     # Identify and remove cases with missing weights:
     nas <- is.na(.data %>% dplyr::select(!!rlang::ensym(weights)))
@@ -27,3 +29,4 @@ design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 
                          weights = !!rlang::ensym(weights), nest = nest)
     return(design)
 }
+

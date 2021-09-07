@@ -1,36 +1,41 @@
 #' freq
 #'
-#' Function to create a frecuency table
-#' @param .data
-#' @param var = NULL
-#' @param by
-#' @param condition
-#' @param vartype = 'se'
+#' Calculates proportions and its variance from ELSOC considering complex survey design
+#'
+#' @param .data data frame (ELSOC) in long format
+#' @param x variable, variable name or logical vector to calculate proportions
+#' @param by vector of variables to group estimates
+#' @param vartype Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')
 #'
 #' @return
 #' @export
 #'
 #' @examples elsoc_long_2016_2019 %>% freq(by = c(m0_sexo, ola))
-freq <- function(.data, var = NULL, by, condition, vartype = 'se') {
+freq <- function(.data, x, by, condition, vartype = 'se') {
+
+    stopifnot(!missing(x))
 
     # If .data is not a survey.design object it is created
     if (!any(class(.data) %in% c('survey.design', 'survey.design2'))) {
-        design <- design_elsoc(.data)
+        survey_design <- survey_design_elsoc(.data)
     } else {
-        design <- .data
+        survey_design <- .data
     }
 
-    # If var is defined, it's added to the 'by' variables:
-    if (is.null(var)) {
+    if (all(as.character(rlang::enexpr(x)) %in% names(survey_design$variables))) {
+        groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::ensym(x)))
+        estimates <- survey_design %>%
+            dplyr::group_by(dplyr::across(!!groups)) %>%
+            srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
+                                                       vartype = vartype))
+    } else {
         groups <- rlang::expr(!!rlang::enexpr(by))
-    } else {
-        groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(var)))
+        estimates <- survey_design %>%
+            dplyr::group_by(dplyr::across(!!groups)) %>%
+            srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
+                                                       proportion = TRUE,
+                                                       vartype = vartype))
     }
-
-    estimates <- design %>%
-        dplyr::group_by(dplyr::across(!!groups)) %>%
-        srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(condition),
-                                            proportion = TRUE,
-                                            vartype = vartype))
     return(estimates)
 }
+

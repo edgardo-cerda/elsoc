@@ -7,7 +7,7 @@
 load_elsoc(url = NULL)
 }
 \arguments{
-\item{url}{}
+\item{url}{URL specifying directory of database}
 }
 \value{
 loads the elsoc dataset into the workspace
