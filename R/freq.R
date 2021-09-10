@@ -10,7 +10,9 @@
 #' @return
 #' @export
 #'
-#' @examples elsoc_long_2016_2019 %>% freq(by = c(m0_sexo, ola))
+#' @examples
+#' load_elsoc(format = 'long')
+#' elsoc_long_2016_2019 %>% freq(by = c(m0_sexo, ola))
 freq <- function(.data, x, by, condition, vartype = 'se') {
 
     stopifnot(!missing(x))

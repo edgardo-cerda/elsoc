@@ -11,7 +11,9 @@
 #' @return
 #' @export
 #'
-#' @examples elsoc_long_2016_2021 %>% design_elsoc()
+#' @examples
+#' load_elsoc(format = 'long')
+#' elsoc_long_2016_2021 %>% design_elsoc()
 survey_design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 'ponderador02', nest = TRUE) {
 
     # Identify and remove cases with missing weights:

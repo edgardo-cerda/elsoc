@@ -4,10 +4,12 @@
 \alias{load_elsoc}
 \title{load_elsoc}
 \usage{
-load_elsoc(url = NULL)
+load_elsoc(url = NULL, format = "long")
 }
 \arguments{
 \item{url}{URL specifying directory of database}
+
+\item{format}{string specifying format of data to load}
 }
 \value{
 loads the elsoc dataset into the workspace
