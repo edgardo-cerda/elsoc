@@ -8,11 +8,11 @@
 #' @param weights Variable or variable name in .data especifying weights. Missing values are droped.
 #' @param nest if TRUE, relabel cluster ids to enforce nesting within strata
 #'
-#' @return
 #' @export
 #'
 #' @examples
-#' elsoc_ejemplo %>% design_elsoc()
+#' elsoc_example %>% survey_design_elsoc()
+#'
 survey_design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 'ponderador02', nest = TRUE) {
     # Identify and remove cases with missing weights:
     nas <- is.na(.data %>% dplyr::select(!!rlang::ensym(weights)))

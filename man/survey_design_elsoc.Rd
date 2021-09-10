@@ -23,12 +23,10 @@ survey_design_elsoc(
 
 \item{nest}{if TRUE, relabel cluster ids to enforce nesting within strata}
 }
-\value{
-
-}
 \description{
 survey_design_elsoc can be used to create a srvyr's tbl_svy object using design information from ELSOC
 }
 \examples{
-elsoc_ejemplo \%>\% design_elsoc()
+elsoc_example \%>\% survey_design_elsoc()
+
 }

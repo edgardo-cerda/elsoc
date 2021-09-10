@@ -15,13 +15,10 @@ freq(.data, x, by, vartype = c("se", "ci", "var", "cv"))
 
 \item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')}
 }
-\value{
-
-}
 \description{
 Calculates proportions and its variance from ELSOC considering complex survey design
 }
 \examples{
-elsoc_ejemplo \%>\% freq(m0_sexo, by = ola)
-elsoc_ejemplo \%>\% freq(c01 \%in\% c(4,5), by = c(ola, m0_sexo))
+elsoc_example \%>\% freq(m0_sexo, by = ola)
+elsoc_example \%>\% freq(c01 \%in\% c(4,5), by = c(ola, m0_sexo))
 }
