@@ -30,6 +30,5 @@ survey_design_elsoc(
 survey_design_elsoc can be used to create a srvyr's tbl_svy object using design information from ELSOC
 }
 \examples{
-load_elsoc(format = 'long')
-elsoc_long_2016_2021 \%>\% design_elsoc()
+elsoc_ejemplo \%>\% design_elsoc()
 }
