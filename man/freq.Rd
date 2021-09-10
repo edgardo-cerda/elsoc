@@ -4,7 +4,7 @@
 \alias{freq}
 \title{freq}
 \usage{
-freq(.data, x, by, condition, vartype = "se")
+freq(.data, x, by, vartype = c("se", "ci", "var", "cv"))
 }
 \arguments{
 \item{.data}{data frame (ELSOC) in long format}
@@ -23,5 +23,7 @@ Calculates proportions and its variance from ELSOC considering complex survey de
 }
 \examples{
 load_elsoc(format = 'long')
-elsoc_long_2016_2019 \%>\% freq(by = c(m0_sexo, ola))
+
+elsoc_long_2016_2019 \%>\% freq(m0_sexo, by = ola)
+elsoc_long_2016_2019 \%>\% freq(c01 \%in\% c(4,5), by = c(ola, m0_sexo))
 }

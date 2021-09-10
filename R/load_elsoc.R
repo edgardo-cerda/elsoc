@@ -8,7 +8,10 @@
 #' @return loads the elsoc dataset into the workspace
 #' @export
 #'
-#' @examples load_elsoc()
+#' @examples
+#'
+#' load_elsoc()
+#'
 load_elsoc <- function(url = NULL, format = 'long') {
 
     # if (is.null(url)) {

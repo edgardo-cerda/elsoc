@@ -18,5 +18,7 @@ loads the elsoc dataset into the workspace
 Loads the elsoc dataset into the workspace
 }
 \examples{
+
 load_elsoc()
+
 }

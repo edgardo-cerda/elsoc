@@ -15,7 +15,6 @@
 #' load_elsoc(format = 'long')
 #' elsoc_long_2016_2021 %>% design_elsoc()
 survey_design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', weights = 'ponderador02', nest = TRUE) {
-
     # Identify and remove cases with missing weights:
     nas <- is.na(.data %>% dplyr::select(!!rlang::ensym(weights)))
     sum_nas <- sum(nas)
@@ -23,7 +22,6 @@ survey_design_elsoc <- function(.data, ids = 'segmento', strata = 'estrato', wei
         .data <- .data[!nas, ]
         message(glue::glue("{sum_nas} cases with missing weights. Droped from survey design."))
     }
-
     # Create survey design object
     design <- .data %>%
         srvyr::as_survey(ids = !!rlang::ensym(ids),

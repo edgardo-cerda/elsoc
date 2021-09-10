@@ -12,18 +12,21 @@
 #'
 #' @examples
 #' load_elsoc(format = 'long')
-#' elsoc_long_2016_2019 %>% freq(by = c(m0_sexo, ola))
-freq <- function(.data, x, by, condition, vartype = 'se') {
-
+#'
+#' elsoc_long_2016_2019 %>% freq(m0_sexo, by = ola)
+#' elsoc_long_2016_2019 %>% freq(c01 %in% c(4,5), by = c(ola, m0_sexo))
+freq <- function(.data, x, by, vartype = c('se', 'ci', 'var', 'cv')) {
     stopifnot(!missing(x))
-
+    if (!is.null(vartype)) {
+        vartype <- if (missing(vartype)) 'se'
+        else match.arg(vartype, several.ok = TRUE)
+    }
     # If .data is not a survey.design object it is created
     if (!any(class(.data) %in% c('survey.design', 'survey.design2'))) {
         survey_design <- survey_design_elsoc(.data)
     } else {
         survey_design <- .data
     }
-
     if (all(as.character(rlang::enexpr(x)) %in% names(survey_design$variables))) {
         groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::ensym(x)))
         estimates <- survey_design %>%
@@ -40,4 +43,3 @@ freq <- function(.data, x, by, condition, vartype = 'se') {
     }
     return(estimates)
 }
-
