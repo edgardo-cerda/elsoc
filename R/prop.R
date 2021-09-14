@@ -1,4 +1,4 @@
-#' freq
+#' prop
 #'
 #' Calculates proportions and its variance from ELSOC considering complex survey design
 #'
@@ -10,9 +10,9 @@
 #' @export
 #'
 #' @examples
-#' elsoc_example %>% freq(m0_sexo, by = ola)
-#' elsoc_example %>% freq(c01 %in% c(4,5), by = c(ola, m0_sexo))
-freq <- function(.data, x, by, vartype = c('se', 'ci', 'var', 'cv')) {
+#' elsoc_example %>% prop(m0_sexo, by = ola)
+#' elsoc_example %>% prop(c01 %in% c(4,5), by = c(ola, m0_sexo))
+prop <- function(.data, x, by, vartype = c('se', 'ci', 'var', 'cv')) {
     stopifnot(!missing(x))
     if (!is.null(vartype)) {
         vartype <- if (missing(vartype)) 'se'
