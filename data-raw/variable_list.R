@@ -18,3 +18,5 @@ variable_list <- readxl::read_excel(path = 'C:/Users/edgar/Dropbox/ELSOC/1_Cuest
            question = paste(limpiar_str(fraseo_pregunta), limpiar_str(fraseo_item)),
            question = ifelse(question == '- -', '-', question)) %>%
     select(variable, label, module, general_concept, question)
+
+usethis::use_data(variable_list, variable_list, overwrite = TRUE)
