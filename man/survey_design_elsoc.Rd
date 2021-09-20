@@ -6,8 +6,8 @@
 \usage{
 survey_design_elsoc(
   .data,
-  ids = "segmento",
-  strata = "estrato",
+  ids = "segmento_disenno",
+  strata = "estrato_disenno",
   weights = "ponderador02",
   nest = TRUE
 )

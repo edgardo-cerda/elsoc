@@ -6,6 +6,7 @@
 #' @param x variable, variable name or logical vector to calculate proportions
 #' @param by = NULL vector of variables to group estimates
 #' @param vartype = c('se', 'ci', 'var', 'cv') Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')
+#' @param na.rm = FALSE A logical value to indicate whether missing values of x should be dropped
 #'
 #' @export
 #'
@@ -13,7 +14,7 @@
 #' elsoc_example %>% prop(m0_sexo, by = ola)
 #' elsoc_example %>% prop(c01 %in% c(4,5), by = c(ola, m0_sexo))
 #'
-prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv')) {
+prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.rm = FALSE) {
     stopifnot(!missing(x))
     if (!is.null(vartype)) {
         vartype <- if (missing(vartype)) 'se'
@@ -30,14 +31,16 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv')) {
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
-                                                       vartype = vartype))
+                                                       vartype = vartype,
+                                                       na.rm = na.rm))
     } else {
         groups <- rlang::expr(!!rlang::enexpr(by))
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
                                                        proportion = TRUE,
-                                                       vartype = vartype))
+                                                       vartype = vartype,
+                                                       na.rm = na.rm))
     }
     return(estimates)
 }
