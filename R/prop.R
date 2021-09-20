@@ -4,15 +4,16 @@
 #'
 #' @param .data data frame (ELSOC) in long format
 #' @param x variable, variable name or logical vector to calculate proportions
-#' @param by vector of variables to group estimates
-#' @param vartype Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')
+#' @param by = NULL vector of variables to group estimates
+#' @param vartype = c('se', 'ci', 'var', 'cv') Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')
 #'
 #' @export
 #'
 #' @examples
 #' elsoc_example %>% prop(m0_sexo, by = ola)
 #' elsoc_example %>% prop(c01 %in% c(4,5), by = c(ola, m0_sexo))
-prop <- function(.data, x, by, vartype = c('se', 'ci', 'var', 'cv')) {
+#'
+prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv')) {
     stopifnot(!missing(x))
     if (!is.null(vartype)) {
         vartype <- if (missing(vartype)) 'se'

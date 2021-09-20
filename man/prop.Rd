@@ -4,16 +4,16 @@
 \alias{prop}
 \title{prop}
 \usage{
-prop(.data, x, by, vartype = c("se", "ci", "var", "cv"))
+prop(.data, x, by = NULL, vartype = c("se", "ci", "var", "cv"))
 }
 \arguments{
 \item{.data}{data frame (ELSOC) in long format}
 
 \item{x}{variable, variable name or logical vector to calculate proportions}
 
-\item{by}{vector of variables to group estimates}
+\item{by}{= NULL vector of variables to group estimates}
 
-\item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')}
+\item{vartype}{= c('se', 'ci', 'var', 'cv') Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')}
 }
 \description{
 Calculates proportions and its variance from ELSOC considering complex survey design
@@ -21,4 +21,5 @@ Calculates proportions and its variance from ELSOC considering complex survey de
 \examples{
 elsoc_example \%>\% prop(m0_sexo, by = ola)
 elsoc_example \%>\% prop(c01 \%in\% c(4,5), by = c(ola, m0_sexo))
+
 }
