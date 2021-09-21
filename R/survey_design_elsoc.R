@@ -28,4 +28,3 @@ survey_design_elsoc <- function(.data, ids = 'segmento_disenno', strata = 'estra
                          weights = !!rlang::ensym(weights), nest = nest)
     return(design)
 }
-
