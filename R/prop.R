@@ -2,11 +2,11 @@
 #'
 #' Calculates proportions and its variance from ELSOC considering complex survey design
 #'
-#' @param .data data frame (ELSOC) in long format
-#' @param x variable, variable name or logical vector to calculate proportions
-#' @param by = NULL vector of variables to group estimates
-#' @param vartype = c('se', 'ci', 'var', 'cv') Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv')
-#' @param na.rm = FALSE A logical value to indicate whether missing values of x should be dropped
+#' @param .data Data frame or tbl_svy survey object object
+#' @param x Variable, variable name or logical vector to calculate proportions
+#' @param by Vector of variables to group estimates
+#' @param vartype Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability
+#' @param na.rm A logical value to indicate whether missing values of x should be dropped
 #'
 #' @export
 #'
@@ -18,7 +18,7 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
     stopifnot(!missing(x))
     if (!is.null(vartype)) {
         vartype <- if (missing(vartype)) 'se'
-        else match.arg(vartype, several.ok = TRUE)
+        else match.arg(vartype, choices = c('se', 'ci', 'var', 'cv'), several.ok = TRUE)
     }
     # If .data is not a survey.design object it is created
     if (!any(class(.data) %in% c('survey.design', 'survey.design2'))) {
@@ -26,13 +26,14 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
     } else {
         survey_design <- .data
     }
-    if (all(as.character(rlang::enexpr(x)) %in% names(survey_design$variables))) {
+    if (is.symbol(enexpr(x))) {
+        if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
         groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::ensym(x)))
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
                                                        vartype = vartype,
-                                                       na.rm = na.rm))
+                                                       na.rm = TRUE))
     } else {
         groups <- rlang::expr(!!rlang::enexpr(by))
         estimates <- survey_design %>%
@@ -40,7 +41,7 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
             srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
                                                        proportion = TRUE,
                                                        vartype = vartype,
-                                                       na.rm = na.rm))
+                                                       na.rm = TRUE))
     }
     return(estimates)
 }
