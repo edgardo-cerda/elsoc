@@ -21,8 +21,10 @@ load_elsoc <- function(url = NULL, format = 'long') {
 
     if (format == 'long') {
         url <- 'https://www.dropbox.com/s/6guepna1ij5sluh/ELSOC_Long_2016_2021_beta_R.RData?dl=1'
+        message("Loading beta version of ELSOC 2016-2021 in Long format")
     } else {
         url <- 'https://www.dropbox.com/s/hv5hmfg36fqcglg/ELSOC_Wide_2016_2021_beta_R.RData?dl=1'
+        message("Loading beta version of ELSOC 2016-2021 in Wide format")
     }
 
     load(url(url), envir = globalenv())
