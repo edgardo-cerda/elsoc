@@ -20,9 +20,9 @@ load_elsoc <- function(url = NULL, format = 'long') {
 
 
     if (format == 'long') {
-        url <- 'https://www.dropbox.com/s/6rmoip5ka4o6daj/ELSOC_Long_2016_2021_v1.00_R.RData?dl=1'
+        url <- 'https://www.dropbox.com/s/6guepna1ij5sluh/ELSOC_Long_2016_2021_beta_R.RData?dl=1'
     } else {
-        url <- 'https://www.dropbox.com/s/2p91u00kdzhk3j6/ELSOC_Wide_2016_2021_v1.00_R.RData?dl=1'
+        url <- 'https://www.dropbox.com/s/hv5hmfg36fqcglg/ELSOC_Wide_2016_2021_beta_R.RData?dl=1'
     }
 
     load(url(url), envir = globalenv())
