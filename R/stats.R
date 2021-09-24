@@ -1,4 +1,4 @@
-#' stat
+#' stats
 #'
 #' Calculates stats (mean, median, total and quantiles) and its variance from ELSOC considering complex survey design
 #'
@@ -15,7 +15,7 @@
 #' elsoc_example %>% stat(m0_sexo, by = ola, stat = 'mean')
 #' elsoc_example %>% stat(c01, by = c(ola, m0_sexo), stat = 'median')
 #'
-stat <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quantile'),
+stats <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quantile'),
                  vartype = c('se', 'ci', 'var', 'cv'), quantiles = NULL, na.rm = FALSE) {
     stopifnot(!missing(x))
     if (!is.null(vartype)) {
@@ -35,18 +35,16 @@ stat <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quant
     } else {
         survey_design <- .data
     }
-    if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
-
     if (stat != 'quantile') {
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
-            srvyr::summarise(stat = fun(x = !!rlang::ensym(x),
+            srvyr::summarise(stat = fun(x = !!rlang::enexpr(x),
                                         vartype = vartype,
-                                        na.rm = TRUE))
+                                        na.rm = na.rm))
     } else {
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
-            srvyr::summarise(stat = fun(x = !!rlang::ensym(x),
+            srvyr::summarise(stat = fun(x = !!rlang::enexpr(x),
                                         quantiles = quantiles,
                                         vartype = vartype,
                                         na.rm = TRUE))
