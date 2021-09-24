@@ -26,15 +26,16 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
     } else {
         survey_design <- .data
     }
-    if (is.symbol(enexpr(x))) {
+    if (is.symbol(rlang::enexpr(x))) {
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
-        groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::ensym(x)))
+        groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(x)))
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
                                                        vartype = vartype,
                                                        na.rm = TRUE))
-    } else {
+    }
+    else {
         groups <- rlang::expr(!!rlang::enexpr(by))
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
