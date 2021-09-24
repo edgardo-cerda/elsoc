@@ -34,8 +34,7 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
                                                        vartype = vartype,
                                                        na.rm = TRUE))
-    }
-    else {
+    } else {
         groups <- rlang::expr(!!rlang::enexpr(by))
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
