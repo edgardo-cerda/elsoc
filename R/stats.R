@@ -40,14 +40,16 @@ stats <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quan
             dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
             srvyr::summarise(stat = fun(x = !!rlang::enexpr(x),
                                         vartype = vartype,
-                                        na.rm = na.rm))
+                                        na.rm = na.rm)) %>%
+            ungroup()
     } else {
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
             srvyr::summarise(stat = fun(x = !!rlang::enexpr(x),
                                         quantiles = quantiles,
                                         vartype = vartype,
-                                        na.rm = TRUE))
+                                        na.rm = TRUE)) %>%
+            ungroup()
     }
     return(estimates)
 }
