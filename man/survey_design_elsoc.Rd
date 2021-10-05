@@ -9,7 +9,8 @@ survey_design_elsoc(
   ids = "segmento_disenno",
   strata = "estrato_disenno",
   weights = "ponderador02",
-  nest = TRUE
+  nest = TRUE,
+  ...
 )
 }
 \arguments{

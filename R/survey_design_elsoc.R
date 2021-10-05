@@ -13,7 +13,7 @@
 #' @examples
 #' elsoc_example %>% survey_design_elsoc()
 #'
-survey_design_elsoc <- function(.data, ids = 'segmento_disenno', strata = 'estrato_disenno', weights = 'ponderador02', nest = TRUE) {
+survey_design_elsoc <- function(.data, ids = 'segmento_disenno', strata = 'estrato_disenno', weights = 'ponderador02', nest = TRUE, ...) {
     # Identify and remove cases with missing weights:
     nas <- is.na(.data %>% dplyr::select(!!rlang::ensym(weights)))
     sum_nas <- sum(nas)
@@ -25,6 +25,8 @@ survey_design_elsoc <- function(.data, ids = 'segmento_disenno', strata = 'estra
     design <- .data %>%
         srvyr::as_survey(ids = !!rlang::ensym(ids),
                          strata = !!rlang::ensym(strata),
-                         weights = !!rlang::ensym(weights), nest = nest)
+                         weights = !!rlang::ensym(weights),
+                         nest = nest,
+                         ...)
     return(design)
 }
