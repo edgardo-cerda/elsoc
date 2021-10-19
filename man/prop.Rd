@@ -4,7 +4,14 @@
 \alias{prop}
 \title{prop}
 \usage{
-prop(.data, x, by = NULL, vartype = c("se", "ci", "var", "cv"), na.rm = FALSE)
+prop(
+  .data,
+  x,
+  by = NULL,
+  vartype = c("se", "ci", "var", "cv"),
+  na.rm = FALSE,
+  ...
+)
 }
 \arguments{
 \item{.data}{Data frame or tbl_svy survey object object}
@@ -16,6 +23,8 @@ prop(.data, x, by = NULL, vartype = c("se", "ci", "var", "cv"), na.rm = FALSE)
 \item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability}
 
 \item{na.rm}{A logical value to indicate whether missing values of x should be dropped}
+
+\item{...}{Other options are pass down to srvyr::survey_mean call}
 }
 \description{
 Calculates proportions and its variance from ELSOC considering complex survey design

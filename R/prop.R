@@ -7,6 +7,7 @@
 #' @param by Vector of variables to group estimates
 #' @param vartype Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability
 #' @param na.rm A logical value to indicate whether missing values of x should be dropped
+#' @param ... Other options are pass down to srvyr::survey_mean call
 #'
 #' @export
 #'
@@ -14,8 +15,10 @@
 #' elsoc_example %>% prop(m0_sexo, by = ola)
 #' elsoc_example %>% prop(c01 %in% c(4,5), by = c(ola, m0_sexo))
 #'
-prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.rm = FALSE) {
+prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.rm = FALSE, ...) {
+    # Stop if x is not specified
     stopifnot(!missing(x))
+    # Select vartype among valid options. Default is 'se' if not specified
     if (!is.null(vartype)) {
         vartype <- if (missing(vartype)) 'se'
         else match.arg(vartype, choices = c('se', 'ci', 'var', 'cv'), several.ok = TRUE)
@@ -26,6 +29,7 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
     } else {
         survey_design <- .data
     }
+    # If x is not a symbol it is assumed is a logical condition:
     if (is.symbol(rlang::enexpr(x))) {
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
         groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(x)))
@@ -33,17 +37,20 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
             dplyr::group_by(dplyr::across(!!groups)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
                                                        vartype = vartype,
-                                                       na.rm = TRUE)) %>%
-            ungroup()
+                                                       na.rm = na.rm,
+                                                       ...)) %>%
+            dplyr::ungroup()
     } else {
+        if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
         groups <- rlang::expr(!!rlang::enexpr(by))
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!groups)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
                                                        proportion = TRUE,
                                                        vartype = vartype,
-                                                       na.rm = TRUE)) %>%
-            ungroup()
+                                                       na.rm = na.rm,
+                                                       ...)) %>%
+            dplyr::ungroup()
     }
     return(estimates)
 }
