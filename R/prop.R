@@ -1,6 +1,7 @@
 #' prop
 #'
-#' Calculates proportions and its variance from ELSOC considering complex survey design
+#' Calculates proportions and its variance of a variable or condition from ELSOC,
+#' considering complex survey design
 #'
 #' @param .data Data frame or tbl_svy survey object object
 #' @param x Variable, variable name or logical vector to calculate proportions
@@ -30,7 +31,7 @@ prop <- function(.data, x, by = NULL, vartype = c('se', 'ci', 'var', 'cv'), na.r
         survey_design <- .data
     }
     # If x is not a symbol it is assumed is a logical condition:
-    if (is.symbol(rlang::enexpr(x))) {
+    if (is.symbol(rlang::enexpr(x)) | is.character(rlang::enexpr(x))) {
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
         groups <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(x)))
         estimates <- survey_design %>%

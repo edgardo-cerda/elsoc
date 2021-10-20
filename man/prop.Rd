@@ -27,7 +27,8 @@ prop(
 \item{...}{Other options are pass down to srvyr::survey_mean call}
 }
 \description{
-Calculates proportions and its variance from ELSOC considering complex survey design
+Calculates proportions and its variance of a variable or condition from ELSOC,
+considering complex survey design
 }
 \examples{
 elsoc_example \%>\% prop(m0_sexo, by = ola)
