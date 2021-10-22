@@ -16,5 +16,5 @@ lookfor <- function(pattern = '.') {
         pos3 <- which(grepl(pattern = pattern, x = tolower(elsoc::variable_list$general_concept)))
 
         pos <- unique(c(pos1, pos2, pos3))
-        return(elsoc::variable_list[pos, c('variable', 'general_concept', 'label')])
+        return(elsoc::variable_list[pos, c('variable', 'label', 'general_concept')])
 }
