@@ -7,8 +7,10 @@
 prop(
   .data,
   x,
-  by = NULL,
+  by,
   vartype = c("se", "ci", "var", "cv"),
+  as.na = NULL,
+  as.factor = FALSE,
   na.rm = FALSE,
   ...
 )
@@ -21,6 +23,8 @@ prop(
 \item{by}{Vector of variables to group estimates}
 
 \item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability}
+
+\item{as.na}{Treat values of x as NA}
 
 \item{na.rm}{A logical value to indicate whether missing values of x should be dropped}
 
