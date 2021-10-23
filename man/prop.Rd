@@ -4,16 +4,7 @@
 \alias{prop}
 \title{prop}
 \usage{
-prop(
-  .data,
-  x,
-  by,
-  vartype = c("se", "ci", "var", "cv"),
-  as.na = NULL,
-  as.factor = FALSE,
-  na.rm = FALSE,
-  ...
-)
+prop(.data, x, by, vartype, na.rm = FALSE, name.format = 1, ...)
 }
 \arguments{
 \item{.data}{Data frame or tbl_svy survey object object}
@@ -24,9 +15,9 @@ prop(
 
 \item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability}
 
-\item{as.na}{Treat values of x as NA}
-
 \item{na.rm}{A logical value to indicate whether missing values of x should be dropped}
+
+\item{name.format}{Controls the output's name format (1 or 2)}
 
 \item{...}{Other options are pass down to srvyr::survey_mean call}
 }
