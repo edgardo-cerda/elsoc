@@ -37,11 +37,11 @@ prop <- function(.data, x, by, vartype,
     if (is.symbol(rlang::enexpr(x)) | is.character(rlang::enexpr(x))) {
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
 
-        if (missing(by)) vars <- c(rlang::enexpr(x))
-        else vars <- c(rlang::enexpr(by), rlang::enexpr(x))
+        if (missing(by)) vars <- rlang::enexpr(x) else
+            vars <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(x)))
 
         estimates <- survey_design %>%
-            dplyr::group_by(!!!vars) %>%
+            dplyr::group_by(dplyr::across(!!vars)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
                                                        vartype = vartype,
                                                        na.rm = na.rm,
@@ -57,8 +57,9 @@ prop <- function(.data, x, by, vartype,
 
     } else {
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
+
         estimates <- survey_design %>%
-            dplyr::group_by(!!rlang::enexpr(by)) %>%
+            dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
             srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
                                                        proportion = TRUE,
                                                        vartype = vartype,
