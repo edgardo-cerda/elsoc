@@ -19,10 +19,10 @@ load_elsoc <- function(url = NULL, format = 'long') {
     # }
 
     if (format == 'long') {
-        url <- 'https://drive.google.com/uc?export=download&id=1re1UkZfZ3foY8A7LlbmGGJ6qkCkVtaoM'
+        url <- 'https://www.dropbox.com/s/i3y7yoljhna7jtq/ELSOC_Long_2016_2021_v1.00_R.RData?dl=1'
         message("Loading beta version of ELSOC 2016-2021 in Long format")
     } else {
-        url <- 'https://drive.google.com/uc?export=download&id=1PLaQIRQEu6EdICzuDusoIUREEFIqoIrX'
+        url <- 'https://www.dropbox.com/s/i3y7yoljhna7jtq/ELSOC_Long_2016_2021_v1.00_R.RData?dl=1'
         message("Loading beta version of ELSOC 2016-2021 in Wide format")
     }
 

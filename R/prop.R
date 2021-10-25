@@ -8,8 +8,7 @@
 #' @param by Vector of variables to group estimates
 #' @param vartype Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability
 #' @param na.rm A logical value to indicate whether missing values of x should be dropped
-#' @param name.format Controls the output's name format (1 or 2)
-#' @param ... Other options are pass down to srvyr::survey_mean call
+#' @param name.format Controls the output's name format (1 or 2). Useful for prop_list function
 #'
 #' @export
 #'
@@ -44,8 +43,7 @@ prop <- function(.data, x, by, vartype,
             dplyr::group_by(dplyr::across(!!vars)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
                                                        vartype = vartype,
-                                                       na.rm = na.rm,
-                                                       ...)) %>%
+                                                       na.rm = na.rm)) %>%
             dplyr::ungroup()
 
         if (name.format==2) {
@@ -63,8 +61,7 @@ prop <- function(.data, x, by, vartype,
             srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
                                                        proportion = TRUE,
                                                        vartype = vartype,
-                                                       na.rm = na.rm,
-                                                       ...)) %>%
+                                                       na.rm = na.rm)) %>%
             dplyr::ungroup()
 
         if (name.format==2) {
