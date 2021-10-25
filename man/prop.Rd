@@ -17,9 +17,7 @@ prop(.data, x, by, vartype, na.rm = FALSE, name.format = 1, ...)
 
 \item{na.rm}{A logical value to indicate whether missing values of x should be dropped}
 
-\item{name.format}{Controls the output's name format (1 or 2)}
-
-\item{...}{Other options are pass down to srvyr::survey_mean call}
+\item{name.format}{Controls the output's name format (1 or 2). Useful for prop_list function}
 }
 \description{
 Calculates proportions and its variance of a variable or condition from ELSOC,

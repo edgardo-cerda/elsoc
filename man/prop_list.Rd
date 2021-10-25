@@ -9,15 +9,13 @@ prop_list(.data, ..., by = NULL, vartype = "se", na.rm = FALSE)
 \arguments{
 \item{.data}{Data frame or tbl_svy survey object object}
 
-\item{...}{Other options are pass down to srvyr::survey_mean call}
+\item{...}{Variables or logical vectors to calculate proportions}
 
 \item{by}{Vector of variables to group estimates}
 
 \item{vartype}{Report variability as one or more of: standard error ('se', default), confidence interval ('ci'), variance ('var') or coefficient of variation ('cv'). vartype = NULL for no variability}
 
 \item{na.rm}{A logical value to indicate whether missing values of x should be dropped}
-
-\item{x}{list of variables, variable names or logical vectors to calculate proportions}
 }
 \description{
 Calculates proportions and its variance of a list of variables or conditions
