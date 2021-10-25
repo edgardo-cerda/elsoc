@@ -22,7 +22,7 @@ load_elsoc <- function(url = NULL, format = 'long') {
         url <- 'https://www.dropbox.com/s/i3y7yoljhna7jtq/ELSOC_Long_2016_2021_v1.00_R.RData?dl=1'
         message("Loading beta version of ELSOC 2016-2021 in Long format")
     } else {
-        url <- 'https://www.dropbox.com/s/i3y7yoljhna7jtq/ELSOC_Long_2016_2021_v1.00_R.RData?dl=1'
+        url <- 'https://www.dropbox.com/s/zbr2ls05wu3fimc/ELSOC_Wide_2016_2021_v1.00_R.RData?dl=1'
         message("Loading beta version of ELSOC 2016-2021 in Wide format")
     }
 
