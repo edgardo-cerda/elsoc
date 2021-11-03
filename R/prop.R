@@ -18,27 +18,32 @@
 #'
 prop <- function(.data, x, by, vartype,
                  na.rm = FALSE, name.format = 1, ...) {
-    # Stop if x is not specified
+    # Detener si no se especifíca x
     stopifnot(!missing(x))
 
-    # Select vartype among valid options. Default is 'se' if not specified
+    # Se selecciona vartype entre las opciones válidas.
+    # Si no se especifica, por defecto es 'se'
     if (missing(vartype)) vartype <- 'se' else
         match.arg(vartype, choices = c('se', 'ci', 'var', 'cv'), several.ok = TRUE)
 
-        # If .data is not a survey.design object it is created
+    # Si .data no es un objeto de survey.design se crea con parámetros por defecto de survey_design_elsoc
     if (!any(class(.data) %in% c('survey.design', 'survey.design2'))) {
         survey_design <- survey_design_elsoc(.data)
     } else {
         survey_design <- .data
     }
 
-    # If x is not a symbol or a character, it is assumed is a logical condition:
-    if (is.symbol(rlang::enexpr(x)) | is.character(rlang::enexpr(x))) {
+    # Se hacen los cálculos. Se divide en 2, identificando cuando x hace referencia a una variable o a una condición lógica
+    if (length(rlang::enexpr(x)) == 1) {
+
+        # Se eliminan casos con NA en x
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
 
-        if (missing(by)) vars <- rlang::enexpr(x) else
+        # Se define la variable auxiliar by, para hacer el llamado de srvyr::summarise
+        if (missing(by)) vars <- rlang::enquo(x) else
             vars <- rlang::expr(c(!!rlang::enexpr(by), !!rlang::enexpr(x)))
 
+        # Se estiman las proporciones
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!vars)) %>%
             srvyr::summarise(prop = srvyr::survey_mean(proportion = TRUE,
@@ -46,7 +51,7 @@ prop <- function(.data, x, by, vartype,
                                                        na.rm = na.rm)) %>%
             dplyr::ungroup()
 
-        if (name.format==2) {
+        if (name.format == 2) {
             estimates <- estimates %>%
                 dplyr::rename(value = !!rlang::enexpr(x)) %>%
                 dplyr::mutate(name = as.character(rlang::enexpr(x))) %>%
@@ -56,15 +61,18 @@ prop <- function(.data, x, by, vartype,
     } else {
         if (na.rm) survey_design <- dplyr::filter(survey_design, !is.na(!!rlang::enexpr(x)))
 
-        estimates <- survey_design %>%
-            dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
+        # Si no hay by, se salta el paso de group_by():
+        if (missing(by)) grouped_survey <- survey_design
+        else grouped_survey <- survey_design %>% dplyr::group_by(dplyr::across(!!rlang::enexpr(by)))
+
+        estimates <- grouped_survey %>%
             srvyr::summarise(prop = srvyr::survey_mean(!!rlang::enexpr(x),
                                                        proportion = TRUE,
                                                        vartype = vartype,
                                                        na.rm = na.rm)) %>%
             dplyr::ungroup()
 
-        if (name.format==2) {
+        if (name.format == 2) {
             estimates <- estimates %>%
                 dplyr::mutate(name = rlang::expr_text(rlang::enexpr(x))) %>%
                 dplyr::relocate(name)
