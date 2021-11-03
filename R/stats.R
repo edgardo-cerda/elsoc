@@ -17,13 +17,16 @@
 #'
 stats <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quantile'),
                  vartype = c('se', 'ci', 'var', 'cv'), quantiles = NULL, na.rm = FALSE) {
+
     stopifnot(!missing(x))
     if (!is.null(vartype)) {
         vartype <- if (missing(vartype)) 'se'
         else match.arg(vartype, choices = c('se', 'ci', 'var', 'cv'), several.ok = TRUE)
     }
+
     stat <- if (missing(stat)) 'mean'
     else match.arg(stat, choices = c('mean', 'median', 'total', 'quantile'), several.ok = FALSE)
+
     if (stat == 'mean') fun <- srvyr::survey_mean
     else if (stat == 'median') fun <- srvyr::survey_median
     else if (stat == 'total') fun <- srvyr::survey_total
@@ -35,13 +38,14 @@ stats <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quan
     } else {
         survey_design <- .data
     }
+
     if (stat != 'quantile') {
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
             srvyr::summarise(stat = fun(x = !!rlang::enexpr(x),
                                         vartype = vartype,
                                         na.rm = na.rm)) %>%
-            ungroup()
+            dplyr::ungroup()
     } else {
         estimates <- survey_design %>%
             dplyr::group_by(dplyr::across(!!rlang::enexpr(by))) %>%
@@ -49,7 +53,7 @@ stats <- function(.data, x, by = NULL, stat = c('mean', 'median', 'total', 'quan
                                         quantiles = quantiles,
                                         vartype = vartype,
                                         na.rm = TRUE)) %>%
-            ungroup()
+            dplyr::ungroup()
     }
     return(estimates)
 }
