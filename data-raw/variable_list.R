@@ -20,6 +20,10 @@ variable_list <- readxl::read_excel(path = file.path('..', '..', '..',
            general_concept = limpiar_str(concepto_general),
            question = paste(limpiar_str(fraseo_pregunta), limpiar_str(fraseo_item)),
            question = ifelse(question == '- -', '-', question)) %>%
-    select(variable, label, module, general_concept, question, opciones_respuesta, codigos_respuesta)
+    select(variable, label, module, general_concept, question, opciones_respuesta, codigos_respuesta,
+           tipo_variable, niveles, starts_with('ola_')) %>%
+    mutate(across(starts_with('ola_'), ~{ifelse( . == 'Si', 'Yes', .)}))
 
 usethis::use_data(variable_list, variable_list, overwrite = TRUE)
+
+
