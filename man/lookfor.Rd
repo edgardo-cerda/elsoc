@@ -10,7 +10,7 @@ lookfor(pattern = ".")
 \item{pattern}{Character string to be looked for in the ELSOC variable list}
 }
 \description{
-Function to find variable names, general concept and label based on a pattern in the ELSOC variable list. Regular expressions for the pattern is supported
+Function to find variable names and label based on a pattern in the ELSOC variable list. Regular expressions for the pattern is supported
 }
 \examples{
 
