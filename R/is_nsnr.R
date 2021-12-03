@@ -10,9 +10,9 @@
 #' @export
 #'
 #' @examples
-#' elsoc_example %>% dplyr::filter(have.value(c01, value = c(-888, -999)))
+#' elsoc_example %>% dplyr::filter(have.value(c01, value = c(-777, -888, -999)))
 #'
-is_nsnr <- function(..., values = c(-888, -999)){
+is_nsnr <- function(..., values = c(-777, -888, -999)){
     purrr::reduce(purrr::map(.x = list(...), .f = ~{. %in% values}), `|`)
 }
 
