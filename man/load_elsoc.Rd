@@ -4,12 +4,21 @@
 \alias{load_elsoc}
 \title{load_elsoc}
 \usage{
-load_elsoc(url = NULL, format = "long")
+load_elsoc(data = "long", name = NULL)
 }
 \arguments{
-\item{url}{URL specifying directory of database}
+\item{name}{specify the name in which the data object is stored}
 
-\item{format}{string specifying format of data to load}
+\item{format}{string specifying format of data to load. Options are:
+\itemize{
+\item 'long' (default)
+\item 'wide'
+\item 'territorial-2016'
+\item 'territorial-2017'
+\item 'territorial-2018'
+\item 'territorial-2019'
+\item 'elsoc-cit-2016'
+}}
 }
 \value{
 loads the elsoc dataset into the workspace
