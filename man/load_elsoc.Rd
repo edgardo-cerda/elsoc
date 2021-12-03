@@ -7,9 +7,7 @@
 load_elsoc(data = "long", name = NULL)
 }
 \arguments{
-\item{name}{specify the name in which the data object is stored}
-
-\item{format}{string specifying format of data to load. Options are:
+\item{data}{string specifying format of data to load. Options are:
 \itemize{
 \item 'long' (default)
 \item 'wide'
@@ -19,6 +17,8 @@ load_elsoc(data = "long", name = NULL)
 \item 'territorial-2019'
 \item 'elsoc-cit-2016'
 }}
+
+\item{name}{specify the name in which the data object is stored}
 }
 \value{
 loads the elsoc dataset into the workspace
@@ -29,5 +29,8 @@ Loads the elsoc dataset into the workspace
 \examples{
 
 load_elsoc()
+load_elsoc(name = 'anyname')
+load_elsoc(data = 'wide')
+load_elsoc(data = 'territorial-2019')
 
 }

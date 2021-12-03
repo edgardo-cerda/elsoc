@@ -19,6 +19,9 @@
 #' @examples
 #'
 #' load_elsoc()
+#' load_elsoc(name = 'anyname')
+#' load_elsoc(data = 'wide')
+#' load_elsoc(data = 'territorial-2019')
 #'
 load_elsoc <- function(data = 'long', name = NULL) {
 
