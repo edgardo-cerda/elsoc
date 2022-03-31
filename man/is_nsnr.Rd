@@ -4,7 +4,7 @@
 \alias{is_nsnr}
 \title{is_nsnr}
 \usage{
-is_nsnr(..., values = c(-777, -888, -999))
+is_nsnr(..., values = c(-666, -777, -888, -999))
 }
 \arguments{
 \item{...}{variables to test}
