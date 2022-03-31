@@ -27,15 +27,13 @@ load_elsoc <- function(data = 'long', name = NULL) {
 
     if (data == 'long') {
         if (is.null(name)) name <- 'elsoc_long_2016_2021'
-        message("Loading beta version of ELSOC 2016-2021 in Long format")
-        load(url('https://www.dropbox.com/s/i3y7yoljhna7jtq/ELSOC_Long_2016_2021_v1.00_R.RData?dl=1'))
+        load(url('https://dataverse.harvard.edu/api/access/datafile/6157094'))
         dataobj <- elsoc_long_2016_2021
     }
 
     else if (data == 'wide') {
         if (is.null(name)) name <- 'elsoc_wide_2016_2021'
-        message("Loading beta version of ELSOC 2016-2021 in Wide format")
-        load(url('https://www.dropbox.com/s/zbr2ls05wu3fimc/ELSOC_Wide_2016_2021_v1.00_R.RData?dl=1'))
+        load(url('https://dataverse.harvard.edu/api/access/datafile/6157091'))
         dataobj <- elsoc_wide_2016_2021
     }
 
