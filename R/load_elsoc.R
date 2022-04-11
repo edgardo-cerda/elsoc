@@ -27,13 +27,13 @@ load_elsoc <- function(data = 'long', name = NULL) {
 
     if (data == 'long') {
         if (is.null(name)) name <- 'elsoc_long_2016_2021'
-        load(url('https://dataverse.harvard.edu/api/access/datafile/6157094'))
+        load(url('https://dataverse.harvard.edu/api/access/datafile/6160173'))
         dataobj <- elsoc_long_2016_2021
     }
 
     else if (data == 'wide') {
         if (is.null(name)) name <- 'elsoc_wide_2016_2021'
-        load(url('https://dataverse.harvard.edu/api/access/datafile/6157091'))
+        load(url('https://dataverse.harvard.edu/api/access/datafile/6160174'))
         dataobj <- elsoc_wide_2016_2021
     }
 
